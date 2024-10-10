@@ -8,7 +8,8 @@ export const posts = createTable(
   "post",
   {
     id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-    name: text("name", { length: 256 }),
+    title: text("name", { length: 256 }).notNull(),
+    content: text("content", { length: 1024 }).notNull(),
     createdAt: int("created_at", { mode: "timestamp" })
       .default(sql`(unixepoch())`)
       .notNull(),
@@ -17,6 +18,6 @@ export const posts = createTable(
     ),
   },
   (example) => ({
-    nameIndex: index("name_idx").on(example.name),
+    nameIndex: index("name_idx").on(example.title),
   })
 );
