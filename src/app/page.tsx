@@ -24,7 +24,7 @@ export default async function HomePage() {
         <div className="flex flex-col gap-2 w-full max-w-2xl py-4">
           <h2 className="text-2xl font-semibold py-4">Posts</h2>
           {posts.map(post => (
-            <PostCard key={post.id} {...post} createdBy={post.userName} />
+            <PostCard key={post.id} {...post} creatorId={post.userId} />
           ))}
         </div>
       </main>

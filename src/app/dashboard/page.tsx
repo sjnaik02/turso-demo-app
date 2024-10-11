@@ -12,7 +12,7 @@ export default async function Dashboard() {
       <SignedIn>
         <h1 className="text-2xl font-semibold max-w-2xl mx-auto">Hello, {user?.firstName}</h1>
         <div className="mt-4 flex flex-col gap-4 max-w-2xl mx-auto">
-          {posts.map((post) => <PostCard key={post.id} {...post} createdBy={post.userName} />)}
+          {posts.map((post) => <PostCard key={post.id} {...post} creatorId={post.userId} />)}
         </div>
       </SignedIn>
       <SignedOut>
