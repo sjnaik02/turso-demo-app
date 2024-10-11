@@ -16,10 +16,6 @@ export default async function HomePage() {
   const posts = await getPosts();
   return (
     <>
-      <div className="w-full max-w-2xl mx-auto py-2 rounded-full border px-4 my-4 flex justify-between items-center">
-        <p className="font-semibold">Personal Twitter</p>
-        <Button className="rounded-full">Sign In</Button>
-      </div>
       <main className="font-sans pt-4 px-4 h-screen w-screen flex flex-col items-center">
         <NewInputForm onSubmit={handleSubmit} />
         <div className="flex flex-col gap-2 w-full max-w-2xl py-4">

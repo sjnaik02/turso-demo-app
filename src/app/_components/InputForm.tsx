@@ -9,7 +9,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useFormStatus } from "react-dom";
 
-
 interface InputFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
 }
@@ -40,26 +39,26 @@ export const NewInputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmitForm)} className="w-full max-w-2xl space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmitForm)} className="w-full max-w-2xl flex flex-col border py-4 px-2">
         <FormField control={form.control} name="title" render={({ field }) => (
           <FormItem>
-            <FormLabel>Title</FormLabel>
+            <FormLabel hidden>Title</FormLabel>
             <FormControl>
-              <Input placeholder="Title" {...field} />
+              <Input placeholder="Title" {...field} className="border-none shadow-none placeholder:font-bold placeholder:text-sm" />
             </FormControl>
             <FormMessage />
           </FormItem>
         )} />
         <FormField control={form.control} name="content" render={({ field }) => (
           <FormItem>
-            <FormLabel>Content</FormLabel>
+            <FormLabel hidden>Content</FormLabel>
             <FormControl>
-              <Textarea placeholder="Content" {...field} />
+              <Textarea placeholder="What's on your mind?" {...field} className="border-none shadow-none placeholder:text-base text-base" />
             </FormControl>
             <FormMessage />
           </FormItem>
         )} />
-        <Button type="submit" disabled={pending}>Submit</Button>
+        <Button type="submit" disabled={pending} className="self-end rounded-full mt-2 text-base">Post</Button>
       </form>
     </Form>
   )
