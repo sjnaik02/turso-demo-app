@@ -11,9 +11,9 @@ export const getPosts = async () => {
   return posts;
 }
 
-export const createPost = async (title: string, content: string) => {
-  await db.insert(posts).values({ title: title, content:  content });
-  console.log("Post created");
+export const createPost = async (title: string, content: string, authorId: string, userName: string) => {
+  console.log(userName);
+  await db.insert(posts).values({ title: title, content:  content, userId: authorId, userName: userName });
   revalidatePath("/");
   redirect("/");
 }

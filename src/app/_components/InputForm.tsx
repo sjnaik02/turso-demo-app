@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useFormStatus } from "react-dom";
+import { useUser } from "@clerk/nextjs";
 
 interface InputFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
@@ -26,6 +27,8 @@ export const NewInputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
       content: "",
     },
   });
+
+  const { user } = useUser();
 
   const { pending } = useFormStatus();
 
@@ -58,7 +61,7 @@ export const NewInputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
             <FormMessage />
           </FormItem>
         )} />
-        <Button type="submit" disabled={pending} className="self-end rounded-full mt-2 text-base">Post</Button>
+        <Button type="submit" disabled={pending || !user} className="self-end rounded-full mt-2 text-base">Post</Button>
       </form>
     </Form>
   )

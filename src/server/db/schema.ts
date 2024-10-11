@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { sql } from "drizzle-orm/sql";
 import { index, int, sqliteTableCreator, text } from "drizzle-orm/sqlite-core";
 
 
@@ -10,6 +10,8 @@ export const posts = createTable(
     id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
     title: text("name", { length: 256 }).notNull(),
     content: text("content", { length: 1024 }).notNull(),
+    userId: text("userId", { length: 256 }).notNull(),
+    userName: text("userName", { length: 256 }).notNull(),
     createdAt: int("created_at", { mode: "timestamp" })
       .default(sql`(unixepoch())`)
       .notNull(),
