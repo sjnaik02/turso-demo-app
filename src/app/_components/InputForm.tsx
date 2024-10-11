@@ -27,18 +27,18 @@ export const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
   };
 
   return (
-    <Card className="w-96 mt-12 ">
-        <CardHeader>
-          <CardTitle className="text-2xl">Personal Twitter</CardTitle>
-          <CardDescription>Say something fun!</CardDescription>
-        </CardHeader>
-        <CardContent className="">
-          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-            <Input placeholder="Title" type="text" className="text-semibold" name="title" value={title} onChange={(e) => setTitle(e.target.value)}/>
-            <Input placeholder="Content" type="text" name="content" value={content} onChange={(e) => setContent(e.target.value)}/>
-            <Button type="submit" disabled={pending}>Submit</Button>
-          </form>
-        </CardContent>
-      </Card>
+    <Card className="w-full max-w-2xl">
+      <CardHeader>
+        <CardTitle className="text-2xl">Personal Twitter</CardTitle>
+        <CardDescription>Say something fun!</CardDescription>
+      </CardHeader>
+      <CardContent className="">
+        <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+          <Input placeholder="Title" type="text" className="text-semibold" name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <Input placeholder="Content" type="text" name="content" value={content} onChange={(e) => setContent(e.target.value)} />
+          <Button type="submit" disabled={pending}>Submit</Button>
+        </form>
+      </CardContent>
+    </Card>
   )
 }

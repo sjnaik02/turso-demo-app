@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { type Metadata } from "next";
@@ -15,7 +14,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body>{children}</body>
+      <body >
+        {children}
+      </body>
     </html>
   );
 }
