@@ -3,6 +3,7 @@ import {db} from "./db"
 import { posts } from "./db/schema"
 import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
+import { eq } from "drizzle-orm"
 
 export const getPosts = async () => {
   const posts = await db.query.posts.findMany({
@@ -16,4 +17,9 @@ export const createPost = async (title: string, content: string, authorId: strin
   await db.insert(posts).values({ title: title, content:  content, userId: authorId, userName: userName });
   revalidatePath("/");
   redirect("/");
+}
+
+export const getUserPosts = async (userId: string) => {
+  const res = await db.query.posts.findMany({ where: eq(posts.userId, userId) });
+  return res;
 }
