@@ -5,9 +5,9 @@ Wanted to learn Turso, Drizzle, and Clerk.
 ## Todos
 
 - [x] Scaffold Project
-- [ ] Add Posts
+- [x] Add Posts
+- [ ] Add auth w/ Clerk
 - [ ] Edit Posts
 - [ ] Delete Posts
-- [ ] Add auth w/ Clerk
 - [ ] Associate Users with Posts
 - [ ] Deploy

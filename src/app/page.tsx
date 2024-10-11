@@ -1,29 +1,30 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { InputForm } from "@/app/_components/InputForm"
+import { PostCard } from "@/app/_components/PostCard"
+import { createPost, getPosts } from "@/server/queries";
 
-export default function HomePage() {
+export const dynamic = 'force-dynamic'
 
+export default async function HomePage() {
+  const handleSubmit = async (formData: FormData) => {
+    "use server"
+    const title = formData.get("title")
+    const content = formData.get("content")
+    await createPost(title as string, content as string)
+  }
+  const posts = await getPosts();
   return (
     <main className="font-sans p-4 h-screen w-screen flex">
       <div className="flex flex-col w-1/2 justify-center items-center border">
-      <Card className="w-96 mt-12 ">
-        <CardHeader>
-          <CardTitle className="text-2xl">Personal Twitter</CardTitle>
-          <CardDescription>Say something fun!</CardDescription>
-        </CardHeader>
-        <CardContent className="">
-          <form className="flex flex-col gap-2">
-            <Input placeholder="Title" type="text" className="text-semibold" name="title" />
-            <Input placeholder="Content" type="text" name="content"/>
-            <Button type="submit">Submit</Button>
-          </form>
-        </CardContent>
-      </Card>
+        <InputForm onSubmit={handleSubmit} />
       </div>
-      <div className="flex flex-col gap-2 w-1/2 border">
+      <div className="flex flex-col gap-2 w-1/2 border overflow-y-scroll">
         <h2 className="text-2xl font-semibold p-4">Posts</h2>
+        {posts.map(post => (
+          <PostCard key={post.id} {...post} />
+        ))}
       </div>
     </main>
   );
 }
+
+
