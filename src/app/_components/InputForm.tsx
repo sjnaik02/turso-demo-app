@@ -1,44 +1,66 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod";
+import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useFormStatus } from "react-dom";
-import { useState } from 'react';
+
 
 interface InputFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
 }
 
-export const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
+const formSchema = z.object({
+  title: z.string().min(1, { message: "Title is required" }).max(100, { message: "Title must be less than 100 characters" }),
+  content: z.string().min(1, { message: "Content is required" }).max(255, { message: "Content must be less than 255 characters" }),
+});
+
+export const NewInputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      content: "",
+    },
+  });
 
   const { pending } = useFormStatus();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  async function onSubmitForm(values: z.infer<typeof formSchema>) {
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
+    formData.append('title', values.title);
+    formData.append('content', values.content);
     await onSubmit(formData);
-    setTitle('');
-    setContent('');
-  };
+    form.reset();
+  }
 
   return (
-    <Card className="w-full max-w-2xl">
-      <CardHeader>
-        <CardTitle className="text-2xl">Personal Twitter</CardTitle>
-        <CardDescription>Say something fun!</CardDescription>
-      </CardHeader>
-      <CardContent className="">
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-          <Input placeholder="Title" type="text" className="text-semibold" name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
-          <Input placeholder="Content" type="text" name="content" value={content} onChange={(e) => setContent(e.target.value)} />
-          <Button type="submit" disabled={pending}>Submit</Button>
-        </form>
-      </CardContent>
-    </Card>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmitForm)} className="w-full max-w-2xl space-y-4">
+        <FormField control={form.control} name="title" render={({ field }) => (
+          <FormItem>
+            <FormLabel>Title</FormLabel>
+            <FormControl>
+              <Input placeholder="Title" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )} />
+        <FormField control={form.control} name="content" render={({ field }) => (
+          <FormItem>
+            <FormLabel>Content</FormLabel>
+            <FormControl>
+              <Textarea placeholder="Content" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )} />
+        <Button type="submit" disabled={pending}>Submit</Button>
+      </form>
+    </Form>
   )
 }

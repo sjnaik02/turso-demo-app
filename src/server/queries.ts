@@ -5,7 +5,9 @@ import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 
 export const getPosts = async () => {
-  const posts = await db.query.posts.findMany();
+  const posts = await db.query.posts.findMany({
+    orderBy: (posts, { desc }) => [desc(posts.createdAt)]
+  });
   return posts;
 }
 

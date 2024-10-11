@@ -1,4 +1,4 @@
-import { InputForm } from "@/app/_components/InputForm"
+import { NewInputForm } from "@/app/_components/InputForm"
 import { PostCard } from "@/app/_components/PostCard"
 import { Button } from "@/components/ui/button"
 
@@ -21,9 +21,9 @@ export default async function HomePage() {
         <Button className="rounded-full">Sign In</Button>
       </div>
       <main className="font-sans pt-4 px-4 h-screen w-screen flex flex-col items-center">
-        <InputForm onSubmit={handleSubmit} />
-        <div className="flex flex-col gap-2 w-full max-w-2xl">
-          <h2 className="text-2xl font-semibold p-4">Posts</h2>
+        <NewInputForm onSubmit={handleSubmit} />
+        <div className="flex flex-col gap-2 w-full max-w-2xl py-4">
+          <h2 className="text-2xl font-semibold py-4">Posts</h2>
           {posts.map(post => (
             <PostCard key={post.id} {...post} />
           ))}
