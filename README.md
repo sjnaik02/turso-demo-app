@@ -7,7 +7,7 @@ Wanted to learn Turso, Drizzle, and Clerk.
 - [x] Scaffold Project
 - [x] Add Posts
 - [x] Add auth w/ Clerk
+- [x] Associate Users with Posts
 - [ ] Edit Posts
 - [ ] Delete Posts
-- [ ] Associate Users with Posts
 - [ ] Deploy
