@@ -51,6 +51,7 @@ const config = {
     "@typescript-eslint/no-empty-interface": "off",
     // Disable the no-unnecessary-type-assertion rule
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
   },
 };
 module.exports = config;
