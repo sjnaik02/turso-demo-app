@@ -36,20 +36,15 @@ export const PostCard: React.FC<PostCardProps> = async ({
   };
   return (
     <div key={id} className="relative w-full max-w-2xl rounded-md border p-4">
-      <div className="flex items-center text-sm">
-        <h3 className="font-semibold">
-          {title} <span className="mx-2">•</span>
-        </h3>
-        <p className="text-muted-foreground">{userName}</p>
-        <p className="ml-auto text-sm text-muted-foreground">
-          {createdAt.toLocaleDateString()} -{" "}
-          {createdAt.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </p>
+      <div className="flex items-center justify-between text-sm">
+        <div className="flex gap-2">
+          <h3 className="font-semibold">
+            {title} <span className="mx-2">•</span>
+          </h3>
+          <p className="text-muted-foreground">{userName}</p>
+        </div>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild className="ml-4">
+          <DropdownMenuTrigger asChild className="">
             <Button variant="ghost" size="icon">
               <MoreHorizontal className="h-4 w-4" />
             </Button>
@@ -77,7 +72,14 @@ export const PostCard: React.FC<PostCardProps> = async ({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <p className="pt-4 text-lg">{content}</p>
+      <p className="pt-2 text-lg">{content}</p>
+      <p className="ml-auto pt-4 text-sm text-muted-foreground">
+        {createdAt.toLocaleDateString()} -{" "}
+        {createdAt.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </p>
       <LikeButton
         likes={likes}
         likePost={handleLike}
