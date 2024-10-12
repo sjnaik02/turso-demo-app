@@ -70,7 +70,7 @@ export const NewInputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
                 <Input
                   placeholder="Title"
                   {...field}
-                  className="border-none shadow-none placeholder:text-sm placeholder:font-bold"
+                  className="border-none shadow-none placeholder:text-base placeholder:font-bold"
                 />
               </FormControl>
               <FormMessage />
