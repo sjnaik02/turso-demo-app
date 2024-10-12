@@ -9,7 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Heart } from "lucide-react";
 import { LikeButton } from "./LikeButton";
 
 interface PostCardProps {
@@ -31,6 +30,10 @@ export const PostCard: React.FC<PostCardProps> = async ({
 }) => {
   const userId = auth().userId;
   const likes = await getPostLikes(id);
+  const handleLike = async () => {
+    "use server";
+    await likePost(id, userId!);
+  };
   return (
     <div key={id} className="relative w-full max-w-2xl rounded-md border p-4">
       <div className="flex items-center text-sm">
@@ -75,25 +78,12 @@ export const PostCard: React.FC<PostCardProps> = async ({
         </DropdownMenu>
       </div>
       <p className="pt-4 text-lg">{content}</p>
-      <form
-        action={async () => {
-          "use server";
-          await likePost(id, userId!);
-        }}
-      >
-        {/* if a user has liked the post, show the heart filled icon, otherwise show the outline icon */}
-        <Button
-          variant="ghost"
-          className="mt-2 text-sm text-muted-foreground"
-          type="submit"
-        >
-          <Heart
-            className="mr-2 h-4 w-4"
-            fill={likes.some((like) => like.userId === userId) ? "red" : "none"}
-          />
-          {likes.length}
-        </Button>
-      </form>
+      <LikeButton
+        likes={likes}
+        likePost={handleLike}
+        userId={userId || ""}
+        postId={id}
+      />
     </div>
   );
 };

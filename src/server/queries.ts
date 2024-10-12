@@ -66,8 +66,9 @@ export const likePost = async (postId: number, userId: string) => {
 };
 
 export const getPostLikes = async (postId: number) => {
-  const res = await db.query.likes.findMany({
-    where: eq(likes.postId, postId),
-  });
+  const res = await db
+    .select({ userId: likes.userId, postId: likes.postId })
+    .from(likes)
+    .where(eq(likes.postId, postId));
   return res;
 };
