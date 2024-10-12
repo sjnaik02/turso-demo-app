@@ -1,8 +1,10 @@
 import { sql } from "drizzle-orm/sql";
 import { index, int, sqliteTableCreator, text } from "drizzle-orm/sqlite-core";
+import { relations } from "drizzle-orm";
 
-
-export const createTable = sqliteTableCreator((name) => `turso-demo-app_${name}`);
+export const createTable = sqliteTableCreator(
+  (name) => `turso-demo-app_${name}`,
+);
 
 export const posts = createTable(
   "post",
@@ -16,10 +18,30 @@ export const posts = createTable(
       .default(sql`(unixepoch())`)
       .notNull(),
     updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
-      () => new Date()
+      () => new Date(),
     ),
   },
   (example) => ({
     nameIndex: index("name_idx").on(example.title),
-  })
+  }),
 );
+
+export const postLikesRelations = relations(posts, ({ many }) => ({
+  likes: many(likes),
+}));
+
+export const likes = createTable("like", {
+  id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  postId: int("postId", { mode: "number" }).notNull(),
+  userId: text("userId", { length: 256 }).notNull(),
+  createdAt: int("created_at", { mode: "timestamp" })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+});
+
+export const likesRelations = relations(likes, ({ one }) => ({
+  post: one(posts, {
+    fields: [likes.postId],
+    references: [posts.id],
+  }),
+}));

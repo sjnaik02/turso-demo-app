@@ -1,6 +1,6 @@
 # Turso Demo App
 
-Wanted to learn Turso, Drizzle, and Clerk. 
+Wanted to learn Turso, Drizzle, and Clerk.
 
 ## Todos
 
@@ -8,6 +8,6 @@ Wanted to learn Turso, Drizzle, and Clerk.
 - [x] Add Posts
 - [x] Add auth w/ Clerk
 - [x] Associate Users with Posts
-- [ ] Edit Posts
-- [ ] Delete Posts
+- [x] Delete Posts
+- [ ] Like Posts
 - [ ] Deploy

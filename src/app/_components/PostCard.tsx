@@ -1,15 +1,16 @@
+"use server";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, Trash } from "lucide-react";
-import { deletePost } from "@/server/queries";
+import { deletePost, getPostLikes, likePost } from "@/server/queries";
 import { auth } from "@clerk/nextjs/server";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Heart } from "lucide-react";
+import { LikeButton } from "./LikeButton";
 
 interface PostCardProps {
   id: number;
@@ -20,7 +21,7 @@ interface PostCardProps {
   creatorId: string;
 }
 
-export const PostCard: React.FC<PostCardProps> = ({
+export const PostCard: React.FC<PostCardProps> = async ({
   id,
   title,
   content,
@@ -29,12 +30,9 @@ export const PostCard: React.FC<PostCardProps> = ({
   creatorId,
 }) => {
   const userId = auth().userId;
-
+  const likes = await getPostLikes(id);
   return (
-    <div
-      key={id}
-      className="relative w-full max-w-2xl rounded-md border p-4"
-    >
+    <div key={id} className="relative w-full max-w-2xl rounded-md border p-4">
       <div className="flex items-center text-sm">
         <h3 className="font-semibold">
           {title} <span className="mx-2">•</span>
@@ -69,6 +67,7 @@ export const PostCard: React.FC<PostCardProps> = ({
                   className="w-full text-red-500"
                 >
                   Delete
+                  <Trash className="ml-2 h-4 w-4" />
                 </Button>
               </form>
             </DropdownMenuItem>
@@ -76,6 +75,25 @@ export const PostCard: React.FC<PostCardProps> = ({
         </DropdownMenu>
       </div>
       <p className="pt-4 text-lg">{content}</p>
+      <form
+        action={async () => {
+          "use server";
+          await likePost(id, userId!);
+        }}
+      >
+        {/* if a user has liked the post, show the heart filled icon, otherwise show the outline icon */}
+        <Button
+          variant="ghost"
+          className="mt-2 text-sm text-muted-foreground"
+          type="submit"
+        >
+          <Heart
+            className="mr-2 h-4 w-4"
+            fill={likes.some((like) => like.userId === userId) ? "red" : "none"}
+          />
+          {likes.length}
+        </Button>
+      </form>
     </div>
   );
 };

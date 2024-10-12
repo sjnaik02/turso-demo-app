@@ -96,7 +96,7 @@ export const NewInputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
         />
         <Button
           type="submit"
-          disabled={pending || !user}
+          aria-disabled={pending || !user}
           className="mt-2 self-end rounded-full text-base"
         >
           Post {pending && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
