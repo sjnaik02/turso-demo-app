@@ -9,5 +9,5 @@ Wanted to learn Turso, Drizzle, and Clerk.
 - [x] Add auth w/ Clerk
 - [x] Associate Users with Posts
 - [x] Delete Posts
-- [ ] Like Posts
+- [x] Like Posts (even added optimistic updates for the flex)
 - [ ] Deploy
