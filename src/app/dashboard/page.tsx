@@ -6,7 +6,7 @@ import { PostCard } from "@/app/_components/PostCard";
 export default async function Dashboard() {
   const userId = auth().userId;
   const user = await currentUser();
-  const posts = await getUserPosts(userId as string);
+  const posts = await getUserPosts(userId!);
   return (
     <main className="p-4">
       <SignedIn>
