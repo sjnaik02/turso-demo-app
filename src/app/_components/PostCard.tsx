@@ -32,7 +32,7 @@ export const PostCard: React.FC<PostCardProps> = async ({
   const likes = await getPostLikes(id);
   const handleLike = async () => {
     "use server";
-    await likePost(id, userId!);
+    await likePost(id, userId ?? "");
   };
   return (
     <div key={id} className="relative w-full max-w-2xl rounded-md border p-4">
@@ -59,7 +59,7 @@ export const PostCard: React.FC<PostCardProps> = async ({
               <form
                 action={async () => {
                   "use server";
-                  await deletePost(id, userId!);
+                  await deletePost(id, userId ?? "");
                 }}
               >
                 <Button
@@ -81,7 +81,7 @@ export const PostCard: React.FC<PostCardProps> = async ({
       <LikeButton
         likes={likes}
         likePost={handleLike}
-        userId={userId || ""}
+        userId={userId ?? ""}
         postId={id}
       />
     </div>
