@@ -17,10 +17,7 @@ import { Button } from "@/components/ui/button";
 import { useFormStatus } from "react-dom";
 import { useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
-
-interface InputFormProps {
-  onSubmit: (formData: FormData) => Promise<void>;
-}
+import { handleSubmit } from "@/app/_components/actions";
 
 const formSchema = z.object({
   title: z
@@ -33,7 +30,7 @@ const formSchema = z.object({
     .max(255, { message: "Content must be less than 255 characters" }),
 });
 
-export const NewInputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
+export const NewInputForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,7 +47,7 @@ export const NewInputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("content", values.content);
-    await onSubmit(formData);
+    await handleSubmit(formData);
     form.reset();
   }
 
